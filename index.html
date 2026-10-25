@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Saral Banking - The Open Standard for Safe Savings</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* Bank Theme CSS Variables */
+    :root {
+      --brand-primary: #0f766e;
+      --brand-hover: #115e59;
+      --brand-accent: #0d9488;
+      --brand-bg: #f0fdfa;
+      --brand-header: #0f766e;
+      --brand-gradient: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+    }
+
+    body {
+      background-color: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Tamil", "Latha", "Tamil Sangam MN", "Noto Sans Devanagari", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Desktop Frame Simulation */
+    @media (min-width: 640px) {
+      body {
+        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%);
+        padding: 20px 0;
+        min-height: 100vh;
+      }
+      #saral-app > div {
+        border-radius: 28px;
+        box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(15, 23, 42, 0.12);
+        overflow: hidden;
+      }
+    }
+
+    /* Accessibility: Dotted Underline for Banking Terms */
+    .term-dotted {
+      text-decoration: underline dotted 2px currentColor;
+      text-underline-offset: 3px;
+      cursor: help;
+      transition: opacity 0.15s ease;
+    }
+    .term-dotted:hover {
+      opacity: 0.85;
+    }
+
+    /* Accessibility: Font Scaling */
+    body.font-scale-normal {
+      font-size: 16px;
+    }
+    body.font-scale-large {
+      font-size: 18px;
+    }
+    body.font-scale-xlarge {
+      font-size: 20px;
+    }
+
+    /* Accessibility: High Contrast Mode */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+    }
+    body.high-contrast .bg-white,
+    body.high-contrast .bg-slate-50,
+    body.high-contrast .bg-teal-50,
+    body.high-contrast .bg-blue-50,
+    body.high-contrast .bg-rose-50,
+    body.high-contrast .bg-amber-50,
+    body.high-contrast .bg-purple-50 {
+      background-color: #121212 !important;
+      color: #ffffff !important;
+      border-color: #ffffff !important;
+    }
+    body.high-contrast .text-slate-900,
+    body.high-contrast .text-slate-800,
+    body.high-contrast .text-slate-700,
+    body.high-contrast .text-slate-600,
+    body.high-contrast .text-slate-500,
+    body.high-contrast .text-teal-900,
+    body.high-contrast .text-teal-800,
+    body.high-contrast .text-rose-900,
+    body.high-contrast .text-rose-800,
+    body.high-contrast .text-amber-900,
+    body.high-contrast .text-purple-900 {
+      color: #ffffff !important;
+    }
+    body.high-contrast .border-slate-200,
+    body.high-contrast .border-slate-300,
+    body.high-contrast .border-teal-200,
+    body.high-contrast .border-teal-600,
+    body.high-contrast .border-rose-400,
+    body.high-contrast .border-amber-300 {
+      border-color: #ffffff !important;
+      border-width: 2px !important;
+    }
+    body.high-contrast button {
+      border: 2px solid #ffffff !important;
+    }
+
+    /* Minimum Touch Target 48px */
+    button, input, select, textarea {
+      min-height: 44px;
+    }
+
+    /* Tactile Micro-Interactions */
+    button, .customer-card, .tab-btn {
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    button:active, .customer-card:active {
+      transform: scale(0.985);
+    }
+
+    /* Smooth focus rings for keyboard navigation */
+    button:focus-visible, input:focus-visible, a:focus-visible, textarea:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px;
+    }
+
+    /* Hide scrollbars cleanly */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Voice Pulse Wave Animation */
+    @keyframes voicePulseWave {
+      0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.7); }
+      70% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(15, 118, 110, 0); }
+      100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
+    }
+    .voice-pulse {
+      animation: voicePulseWave 2s infinite ease-in-out;
+    }
+
+    /* Toast Notification Animation */
+    @keyframes toastSlideUp {
+      from { transform: translate(-50%, 20px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    .toast-animate {
+      animation: toastSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Print Styles for Passbook / Statement */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+      }
+      #saral-app > div {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        max-width: 100% !important;
+      }
+      header, nav, #btn-header-back, .tab-btn, button {
+        display: none !important;
+      }
+      #printable-statement {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="font-scale-large">
+  <div id="saral-app">
+    <!-- Application renders here dynamically -->
+    <div class="min-h-screen flex items-center justify-center p-6 text-slate-500 font-bold">
+      Loading Saral Banking...
+    </div>
+  </div>
+
+  <!-- UMD Data Modules (Zero Build Step, Works Offline & On file:// without CORS) -->
+  <script src="src/data/config.js?v=2.5"></script>
+  <script src="src/data/banks.js?v=2.5"></script>
+  <script src="src/data/customers.js?v=2.5"></script>
+  <script src="src/data/transactions.js?v=2.5"></script>
+  <script src="src/data/payees.js?v=2.5"></script>
+  <script src="src/data/glossary.js?v=2.5"></script>
+  <script src="src/data/faq.js?v=2.5"></script>
+  <script src="src/data/scams.js?v=2.5"></script>
+  
+  <!-- Translations -->
+  <script src="src/i18n/en.js?v=2.5"></script>
+  <script src="src/i18n/hi.js?v=2.5"></script>
+  <script src="src/i18n/ta.js?v=2.5"></script>
+  
+  <!-- Audio & Indian Number Words -->
+  <script src="src/audio.js?v=2.5"></script>
+  
+  <!-- Core Application -->
+  <script src="src/app.js?v=2.5"></script>
+</body>
+</html>
