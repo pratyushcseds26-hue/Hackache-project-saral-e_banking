@@ -9,7 +9,7 @@ An open standard web app prototype designed for a hackathon. **Saral Banking** r
 You can run the web app in either of two instant ways:
 
 ### Method 1: Local HTTP Server (Recommended)
-1. Open PowerShell or Command Prompt in this folder (`C:\Users\Sahil Pal\.gemini\antigravity\scratch\saral-banking`).
+1. Open PowerShell or Command Prompt in this folder 
 2. Run:
    ```bash
    python -m http.server 8000
